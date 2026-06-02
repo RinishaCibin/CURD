@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import *
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate
+from .models import StudentModel
 
 
 
@@ -43,8 +44,39 @@ class AddStudentView(CreateView):
             return redirect('shome')
         return render(request,"addStudent.html",{"form":form_data})
     
+class EditStudentView(View):
+   def get(self,request,**kwargs):
+       sid=kwargs.get('id')
+       studentproject=StudentModel.objects.get(id=sid)
+       form=StudentForm(instance=studentproject)
+       return render(request,"editStudent.html",{"form":form})
+   def post(self,request,**kwargs):
+       sid=kwargs.get('id')
+       studentproject=StudentModel.objects.get(id=sid)
+       form_data=StudentForm(instance=studentproject,files=request.FILES,data=request.POST)
+       if form_data.is_valid():
+           form_data.save()
+           return redirect('shome')
+       return render(request,"editStudent.html",{"form":form_data})
+   
+class DeleteStudentView(View):
+    def get(self,request,**kwargs):
+        sid=kwargs.get('id')
+        StudentModel.objects.get(id=sid).delete()
+        return redirect('shome')
 
 
+
+
+
+
+    
+
+
+
+
+
+    
 
 
      
