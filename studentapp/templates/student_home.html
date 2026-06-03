@@ -1,11 +1,79 @@
 {% extends 'base.html' %}
 {% block base %}
+<div class="mt-4" >
+<a href="{% url 'addstudent' %}" class="btn btn-success px-5py-3 fs-4"style="margin-left: 50px;">Add Student +</button></a>
+</div>
 <div>
 <h1 style="text-align: center; color: #be1818;font-size: 40px; font-family: 'Arial', sans-serif;">Student List</h1>
 </div>
 
-<div class="container-fluid">
-<table class="table table-dark w-100%">
+<div class="container my-5">
+    <div class="row g-4">
+        {% for i in slist %}
+        <div class="col-12 col-md-6">
+            <div class="card h-100 shadow-sm border-0 bg-light text-dark p-3">
+                <div class="row g-0 align-items-center">
+                    
+                   
+                    <div class="col-4 text-center">
+                        {% if i.picture %}
+                            <img src="{{ i.picture.url }}" class="rounded-circle border border-3 border-secondary" alt="{{ i.name }}" style="width: 100px; height: 100px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px;">
+                                <i class="bi bi-person-fill fs-2 text-light"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-8">
+                        <div class="card-body py-1 ps-3">
+                           
+                            <div class="mb-1">
+                                <span class="small fw-bold">Name:</span> 
+                                <span class="text-black fw-bold fs-5 ms-1">{{ i.name }}</span>
+                            </div>
+
+                            <div class="mb-1">
+                                <span class="small fw-bold">Class:</span> 
+                                <span class="text-black fw-semibold ms-1">{{ i.studentclass }}</span>
+                            </div>
+
+                          
+                            <div class="mb-1">
+                                <span class= "small fw-bold">DOB:</span> 
+                                 <span class="text-black fw-semibold ms-1">{{ i.dob }}</span>
+                            </div>
+
+                          
+                            <div class="mb-3">
+                                <span class="small fw-bold">Year:</span> 
+                                 <span class="text-black fw-semibold ms-1">{{ i.year }}</span>
+                            </div>
+
+                            
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'editstudent' i.id %}" class="btn btn-danger btn-sm px-3 fw-semibold" style="font-size: 15px;">Edit</a>
+                                <a href="{% url 'deletestudent' i.id %}" class="btn btn-danger btn-sm px-3 fw-semibold" style="font-size: 15px;">Delete</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+        
+
+
+
+
+<!-- <div class="container-fluid">
+<table class="table table-white w-100%">
     <thead>
         <tr>
             <th>NAME</th>
@@ -31,14 +99,14 @@
             </td>
             
             <td>
-            <a href="{% url 'editstudent' i.id %}" class="btn btn-warning me-2">Edit</a>
-            <a href="{% url 'deletestudent' i.id %}" class="btn btn-success me-2">Delete</a>
+            <a href="{% url 'editstudent' i.id %}" class="btn btn-danger me-2">Edit</a>
+            <a href="{% url 'deletestudent' i.id %}" class="btn btn-danger me-2">Delete</a>
           </td>
           
         </tr>
         {% endfor %}
-    </tbody>
-</table>
+    </tbody> 
+</table>-->
 </div>
 {% endblock base %}
 

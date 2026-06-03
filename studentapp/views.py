@@ -7,6 +7,7 @@ from django.views.generic import *
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate
 from .models import StudentModel
+from django.contrib.auth import authenticate, login
 
 
 
@@ -25,9 +26,11 @@ class SigninView(FormView):
             pswd=form_data.cleaned_data.get('password')
             user=authenticate(request,username=uname,password=pswd)
         if user:
+            login(request, user)  
             return redirect('shome')
         else:
             return redirect('signin')
+        
         
 class StudentHomeView(ListView):
     template_name='student_home.html'
