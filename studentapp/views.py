@@ -7,7 +7,8 @@ from django.views.generic import *
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate
 from .models import StudentModel
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate,login,logout
+
 
 
 
@@ -30,7 +31,6 @@ class SigninView(FormView):
             return redirect('shome')
         else:
             return redirect('signin')
-        
         
 class StudentHomeView(ListView):
     template_name='student_home.html'
@@ -67,6 +67,10 @@ class DeleteStudentView(View):
         sid=kwargs.get('id')
         StudentModel.objects.get(id=sid).delete()
         return redirect('shome')
+
+def logout_view(request):
+    logout(request)
+    return redirect('signin')
 
 
 
